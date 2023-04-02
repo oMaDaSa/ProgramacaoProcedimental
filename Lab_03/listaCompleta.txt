@@ -520,14 +520,16 @@ ano anterior. Faça programa que determine o salário atual do funcionário.
 */
 
 int main(){
-    float salario = 2000.00, aumento = (1.5)/100;
-    int ano = 1995;
+    double salario = 2000.00, aumento = 0.015;
+    int ano = 1996;
 
     while(ano < 2023){
-        ano++;
-        salario += salario * aumento;
+      ano++;
+      
+      aumento *= 2;
+      salario += salario * aumento;
     }
-    printf("Salario em %d eh de R$%.2f\n", ano, salario);
+    printf("Salario em %d eh de R$ %.2f\n", ano, salario);
     system("pause");
     return 0;
 }
