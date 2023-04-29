@@ -1,0 +1,1471 @@
+## Vetores
+
+## 1)
+
+```c
+#include <stdio.h>
+
+/*Faça um programa que possua um vetor denominado A que armazene 6 números inteiros.
+O programa deve executar os seguintes passos:
+a) Atribua os seguintes valores a esse vetor: 1, 0, 5, -2, -5, 7.
+b) Armazene em uma variável inteira (simples) a soma entre os valores das posições
+A[0], A[1] e A[5] do vetor e mostre na tela esta soma.
+c) Modifique o vetor na posição 4, atribuindo a esta posição o valor 100.
+d) Mostre na tela cada valor do vetor A, um em cada linha.*/
+
+int main(){
+    //a
+    int vetor[6] = {1, 0, 5, -2, -5, 7}, soma = 0;
+
+    //b
+    soma += vetor[0] + vetor[1] + vetor[5];
+    printf("A soma das posicoes A[0], A[1] e A[5] eh %d\n", soma);
+
+    //c
+    vetor[4] = 100;
+
+    //d
+    for(int i = 0; i < 6; i++){
+        printf("A[%d] = %d\n", i, vetor[i]);
+    }
+
+    return 0;
+}
+```
+
+## 2)
+
+```c
+#include <stdio.h>
+
+/*Faça um programa que leia um vetor de 8 posições e, em seguida, leia também dois valores
+X e Y quaisquer correspondentes a duas posições no vetor. Ao final seu programa deverá
+escrever a soma dos valores encontrados nas respectivas posições X e Y.*/
+
+float somaPosicoes(int a[8], int pos1, int pos2);
+
+int main(){
+    float vetor[8];
+    int pos1, pos2;
+
+    for(int i = 0; i < 8; i++){
+        printf("Insira o valor da posicao %d: ", i);
+        scanf("%d",&vetor[i]);
+    }
+
+    printf("Digite as posicoes a serem somadas: ");
+    scanf("%d %d",&pos1, &pos2);
+
+    printf("A soma dos valores em A[%d] + A[%d] eh %.2f", pos1, pos2, somaPosicoes(vetor, pos1, pos2));
+    return 0;
+}
+
+float somaPosicoes(int a[8], int pos1, int pos2){
+    int soma = a[pos1] + a[pos2];
+    return soma;
+}
+```
+
+## 3)
+
+```c
+#include <stdio.h>
+
+/*Crie um programa que lê 6 valores inteiros e, em seguida, mostre na tela os valores lidos na
+ordem inversa.*/
+
+void printVetorInverso(int a[6]);
+
+int main(){
+    int vetor[6];
+
+    printf("Insira 6 valores inteiros: ");
+    for(int i = 0; i < 6; i++){
+        scanf("%d",&vetor[i]);
+    }
+    
+    printVetorInverso(vetor);
+    return 0;
+}
+
+void printVetorInverso(int a[6]){
+    for(int i = 5; i >= 0; i--){
+        printf("%d ", a[i]);
+    }
+    printf("\n");
+}
+```
+
+## 4)
+
+```c
+#include <stdio.h>
+
+/*Fazer um programa para ler 5 valores e, em seguida, mostrar a posição onde se encontram
+o maior e o menor valor.*/
+
+int posMaior(int a[5]);
+int posMenor(int a[5]);
+
+int main(){
+    int vetor[5], maior, menor;
+
+    printf("Insira 5 valores inteiros: ");
+    for(int i = 0; i < 5; i++){
+        scanf("%d",&vetor[i]);
+    }
+    
+    maior = posMaior(vetor);
+    menor = posMenor(vetor);
+
+    printf("O maior valor esta na %da posicao (A[%d])\n", maior + 1, maior);
+    printf("O menor valor esta na %da posicao (A[%d])\n", menor + 1, menor);
+
+    return 0;
+}
+
+int posMaior(int a[5]){
+    int maior = a[0], pos = 0;
+    for(int i = 0; i < 5; i++){
+        if(a[i] > maior){
+            maior = a[i];
+            pos = i;
+        }
+    }
+    return pos;
+}
+int posMenor(int a[5]){
+    int menor = a[0], pos = 0;
+    for(int i = 0; i < 5; i++){
+        if(a[i] < menor){
+            menor = a[i];
+            pos = i;
+        }
+    }
+    return pos;
+}
+```
+
+## 5)
+
+```c
+#include <stdio.h>
+
+/*Faça um vetor de tamanho 50 preenchido com o seguinte valor: (i+5*i)%(i+1), sendo i
+a posição do elemento no vetor. Em seguida imprima o vetor na tela..*/
+
+int main(){
+    int vetor[50];
+    printf("%d\n\n", (1+5*1)%(1+1));
+    
+    for(int i = 0; i < 50; i++){
+        vetor[i] = (i+5*i)%(i+1);
+        printf("A[%d] = %d\n", i, vetor[i]);
+    }
+
+    return 0;
+}
+```
+
+## 6)
+
+```c
+#include <stdio.h>
+#include <math.h>
+
+/*Leia 10 números inteiros e armazene em um vetor. Em seguida escreva os elementos que
+são primos e suas respectivas posições no vetor.*/
+
+int verificaPrimo(int x);
+
+int main(){
+    int vetor[10];
+    printf("Insira 10 valores inteiros: ");
+
+    for(int i = 0; i < 10; i++){
+        scanf("%d",&vetor[i]);
+    }
+
+    for(int i = 0; i < 10; i++){
+        if(verificaPrimo(vetor[i]) == 1){
+            printf("%d, na posicao A[%d] eh primo\n",vetor[i], i);
+        }
+    }
+
+    return 0;
+}
+
+int verificaPrimo(int x){
+    int raiz = sqrt(x);
+    if(x <= 1){
+        return 0;
+    }else if(x == 2){
+        return 1;
+    }else if(x%2==0){
+        return 0;
+    }else{
+        for(int i = 3; i < raiz; i+=2){
+            if(x%i==0){
+                return 0;
+            }
+        }
+        return 1;
+    }
+}
+```
+
+## 7)
+
+```c
+#include <stdio.h>
+
+/*Faça um programa que receba 6 números inteiros e mostre:
+ Os números pares digitados;
+ A soma dos números pares digitados;
+ Os números ímpares digitados;
+ A quantidade de números ímpares digitados;*/
+
+int ehPar(int x);
+
+int main(){
+    int vetor[6], somaPares = 0, qtdImpares = 0;
+    printf("Insira 6 valores inteiros: ");
+
+    for(int i = 0; i < 6; i++){
+        scanf("%d",&vetor[i]);
+    }
+
+    printf("Pares: \n");
+    for(int i = 0; i < 6; i++){
+        if(ehPar(vetor[i])) {
+            somaPares += vetor[i];
+            printf("A[%d]%d\n",i, vetor[i]);
+        }
+    }
+    printf("Soma dos pares eh %d\n",somaPares);
+
+    printf("Impares: \n");
+    for(int i = 0; i < 6; i++){
+        if(!ehPar(vetor[i])) {
+            qtdImpares++;
+            printf("A[%d]%d\n",i, vetor[i]);
+        }
+    }
+    printf("Qtd de impares eh %d\n",qtdImpares);
+
+    return 0;
+}
+```
+
+## 8)
+
+```c
+#include <stdio.h>
+
+/*Faça um programa para ler 10 números DIFERENTES a serem armazenados em um vetor. Os
+dados deverão ser armazenados no vetor na ordem que forem sendo lidos, sendo que caso
+o usuário digite um número que já foi digitado anteriormente, o programa deverá pedir para
+ele digitar outro número. Note que cada valor digitado pelo usuário deve ser pesquisado no
+vetor, verificando se ele existe entre os números que já foram fornecidos. Exibir na tela o
+vetor final que foi digitado*/
+
+int main(){
+    float vetor[10];
+    int i, j, validade;
+
+    for(i = 0; i < 10; i++){
+        while(1){
+            if(i != 0 && validade == 0){
+                printf("Numero ja digitado, insira outro: ");
+            }else{
+                printf("Digite um numero inteiro: ");
+            }
+            scanf("%f", &vetor[i]);
+            if(i == 0){
+                break;
+            }
+            for(j = 0; j < i; j++){
+                if(vetor[i] == vetor[j]){
+                    validade = 0;
+                    break;
+                }else{
+                    validade = 1;
+                }
+            }
+            if(validade) break;
+        }
+    }
+
+    for(i = 0; i < 10; i++){
+        printf("%.2f ", vetor[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+```
+
+## Matrizes
+
+## 1)
+
+```c
+#include <stdio.h>
+
+/*Leia uma matriz 4 × 4, conte e escreva quantos valores maiores que 10 ela possui*/
+
+int maiorqDez(int x);
+
+int main(){
+    float matriz[4][4];
+    int count = 0;
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 4; j++){
+            scanf("%f",&matriz[i][j]);
+            if(maiorqDez(matriz[i][j])) count++;
+        }
+    }
+
+    printf("%d numeros sao maior que 10: \n", count);
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 4; j++){
+            if(maiorqDez(matriz[i][j])) printf("A[%d][%d] = %.2f\n", i, j, matriz[i][j]);
+        }
+    }
+    return 0;
+}
+
+int maiorqDez(int x){
+    if(x > 10) return 1;
+    else return 0;
+}
+```
+
+## 2)
+
+```c
+#include <stdio.h>
+
+/*Declare uma matriz 5 × 5. Preencha com 1 a diagonal principal e com 0 os demais elementos.
+Escreva ao final a matriz obtida.*/
+
+int main(){
+    int matriz[5][5];
+    for(int i=0; i<5; i++){
+        for(int j=0; j<5; j++){
+            if(i == j){
+                matriz[i][j] = 1;
+            }else{
+                matriz[i][j] = 0;
+            }
+        }
+    }
+
+    for(int i=0; i<5; i++){
+        for(int j=0; j<5; j++){
+            printf("%d ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+    return 0;
+}
+```
+
+## 3)
+
+```c
+#include <stdio.h>
+
+/*Leia uma matriz 4 × 4, imprima a matriz e retorne a localização (linha e a coluna) do maior
+valor.*/
+
+int main(){
+    int maiorLinha = 0, maiorColuna = 0, i, j;
+    float matriz[4][4], maiorNumero;
+    printf("Insira uma matriz 4x4:\n");
+    for(i=0; i<4; i++){
+        for(j=0; j<4; j++){
+            scanf("%f",&matriz[i][j]);
+        }
+    }
+
+    maiorNumero = matriz[0][0];
+    for(i=0; i<4; i++){
+        for(j=0; j<4; j++){
+            if(matriz[i][j] > maiorNumero){
+                maiorNumero = matriz[i][j];
+                maiorColuna = j;
+                maiorLinha = i;
+            }
+        }
+    }
+
+    printf("O numero %.2f, na coluna %d, linha %d\n", maiorNumero, maiorColuna+1, maiorLinha+1);
+    return 0;
+}
+```
+
+## 4)
+
+```c
+#include <stdio.h>
+
+/*Leia uma matriz 5 × 5. Leia também um valor X. O programa deverá fazer uma busca desse
+valor na matriz e, ao final, escrever a localização (linha e coluna) ou uma mensagem de “não
+encontrado”.*/
+
+int main(){
+    int i, j, encontrados = 0;
+    float matriz[5][5], encontrar;
+    printf("Insira uma matriz 5x5:\n");
+    for(i=0; i<5; i++){
+        for(j=0; j<5; j++){
+            scanf("%f",&matriz[i][j]);
+        }
+    }
+
+    printf("Insira o valor a procurar: ");
+    scanf("%f", &encontrar);
+
+    for(i=0; i<5; i++){
+        for(j=0; j<5; j++){
+            if(matriz[i][j] == encontrar){
+                encontrados++;
+                printf("Linha: %d | Coluna: %d\n",i+1,j+1);
+            }
+        }
+    }
+
+    if(encontrados == 0){
+        printf("Valor nao encontrado\n");
+    }
+    
+    return 0;
+}
+```
+
+## 5)
+
+```c
+#include <stdio.h>
+
+/*Gerar e imprimir uma matriz de tamanho 10 × 10, onde seus elementos são da forma:
+A[i][j] = 2i + 7j - 2 se i < j;
+A[i][j] = 3i²- 1 se i = j;
+A[i][j] = 4i³ – 5j² + 1 se i > j:*/
+
+int main(){
+    int matriz[10][10];
+
+    for(int i=0; i<10; i++){
+        for(int j=0; j<10; j++){
+            if(i<j){
+                matriz[i][j] =  (2*i) + (7*j);
+            }else if(i==j){
+                matriz[i][j] =  (3*i*i) - 1;
+            }else{
+                matriz[i][j] =  (3*i*i*i) - (5*j*j) + 1;
+            }
+        }
+    }
+
+    for(int i=0; i<10; i++){
+        for(int j=0; j<10; j++){
+            printf("%d ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+    return 0;
+}
+```
+
+## 6)
+
+```c
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+
+/*Gere matriz 4 × 4 com valores no intervalo [1, 20]. Escreva um programa que transforme a
+matriz gerada numa matriz triangular inferior, ou seja, atribuindo zero a todos os elementos
+acima da diagonal principal. Imprima a matriz original e a matriz transformada*/
+
+int main(){
+    int matrizOriginal[4][4], matrizTransformada[4][4];
+    srand(time(NULL));
+
+    for(int i=0; i<4; i++){
+        for(int j=0; j<4; j++){
+            matrizOriginal[i][j] = rand() % 20 + 1;
+            matrizTransformada[i][j] = matrizOriginal[i][j];
+        }
+    }
+
+    for(int i=0; i<4; i++){
+        for(int j=0; j<4; j++){
+            if(j > i){
+                matrizTransformada[i][j] = 0;
+            }
+        }
+    }
+
+    printf("Matriz original: \n");
+    for(int i=0; i<4; i++){
+        for(int j=0; j<4; j++){
+            printf("%d ", matrizOriginal[i][j]);
+        }
+        printf("\n");
+    }
+
+    printf("\nMatriz transformada: \n");
+    for(int i=0; i<4; i++){
+        for(int j=0; j<4; j++){
+            printf("%d ", matrizTransformada[i][j]);
+        }
+        printf("\n");
+    }
+    return 0;
+}
+```
+
+## 7)
+
+```c
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+
+/* Faça um programa para gerar automaticamente números entre 0 e 99 de uma cartela de
+bingo. Sabendo que cada cartela deverá conter 5 linhas de 5 números, gere estes dados de
+modo a não ter números repetidos dentro das cartelas. O programa deve exibir na tela a
+cartela gerada.*/
+
+int searchArray(int x, int Vet[25], int count);
+void printCartela(int array[5][5]);
+
+int main(){
+    int cartela[5][5], numerosInvalidos[25], count = 0;
+    srand(time(NULL));
+
+    for(int i = 0; i < 25; i++){
+        for(int j = 0; j < 25; j++){
+            numerosInvalidos[i] = -1;
+        }
+    }
+
+    for(int i = 0; i < 5; i++){
+        for(int j = 0; j < 5; j++){
+            do{
+                cartela[i][j] = rand() % 99;
+                numerosInvalidos[count] = cartela[i][j];
+            }while(searchArray(cartela[i][j], numerosInvalidos, count) == 0);
+            count++;
+        }
+    }
+
+    printf("B  I  N  G  O\n");
+    printCartela(cartela);
+
+    return 0;
+}
+
+int searchArray(int x, int vet[25], int count){
+    for(int i = 0; i < count; i++){
+        if(x == vet[i]){
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void printCartela(int array[5][5]){
+    for(int i = 0; i < 5; i++){
+        for(int j = 0; j < 5; j++){
+            if(array[i][j] < 10){
+                printf("0%d ", array[i][j]);
+            }else{
+                printf("%d ", array[i][j]);
+            }
+        }
+        printf("\n");
+    }
+}
+```
+
+## 8)
+
+```c
+#include <stdio.h>
+
+/*Faça um programa que leia duas matrizes 2 × 2 com valores reais. Ofereça ao usuário um
+menu de opções:
+a) somar as duas matrizes
+b) subtrair a primeira matriz da segunda
+c) adicionar uma constante às duas matrizes
+d) imprimir as matrizes*/
+
+void somarMatrizes(float matrizA[2][2], float matrizB[2][2]);
+void subtrairMatrizes(float matrizA[2][2], float matrizB[2][2]);
+void adicionarConstante(float matrizA[2][2], float matrizB[2][2], float constante);
+void imprimirMatrizes(float matrizA[2][2], float matrizB[2][2]);
+
+int main(){
+    int inputMenu = 1;
+    float matrizA[2][2], matrizB[2][2], constante = 0;
+
+    //Inserir a matriz A
+    printf("Insira a 1a matriz 2x2: \n");
+    for(int i = 0; i < 2; i++){
+        for(int j = 0; j < 2; j++){
+            scanf("%f", &matrizA[i][j]);
+        }
+    }
+    //Inserir a matrizB
+    printf("Insira a 2a matriz 2x2: \n");
+    for(int i = 0; i < 2; i++){
+        for(int j = 0; j < 2; j++){
+            scanf("%f", &matrizB[i][j]);
+        }
+    }
+
+    //Programa
+    while(inputMenu){
+        do{ //Menu
+            printf("1 - somar as matrizes\n2 - subtrair a primeira matriz da segunda\n3 - adicionar uma constante as matrizes\n4 - imprimir as matrizes\n0 - Encerrar programa\nOpcao: ");
+            scanf("%d",&inputMenu);
+            if(inputMenu < 0 || inputMenu > 4)printf("Opcao invalida\n");
+        }while(inputMenu < 0 || inputMenu > 4);
+
+        //Realiza as opcoes do menu
+        switch (inputMenu)
+        {
+        case 1:
+            somarMatrizes(matrizA, matrizB);
+            break;
+        case 2:
+            subtrairMatrizes(matrizB, matrizA);
+            break;
+        case 3:
+            printf("Insira a constante a ser adicionada: ");
+            scanf("%f", &constante);
+            adicionarConstante(matrizA, matrizB, constante);
+            break;
+        case 4:
+            imprimirMatrizes(matrizA, matrizB);
+            break;
+        case 5:
+            return 0;
+        }
+    }
+}
+
+void somarMatrizes(float matrizA[2][2], float matrizB[2][2]){
+    for(int i = 0; i < 2; i++){
+        for(int j = 0; j < 2; j++){
+            matrizA[i][j] += matrizB[i][j];
+            matrizB[i][j] = matrizA[i][j];
+        }
+    }
+}
+
+void subtrairMatrizes(float matrizA[2][2], float matrizB[2][2]){
+    for(int i = 0; i < 2; i++){
+        for(int j = 0; j < 2; j++){
+            matrizA[i][j] -= matrizB[i][j];
+        }
+    }
+}
+
+void adicionarConstante(float matrizA[2][2], float matrizB[2][2], float constante){
+    for(int i = 0; i < 2; i++){
+        for(int j = 0; j < 2; j++){
+            matrizA[i][j] += constante;
+            matrizB[i][j] += constante;
+        }
+    }
+}
+
+void imprimirMatrizes(float matrizA[2][2], float matrizB[2][2]){
+    printf("\nMatriz A: \n");
+    for(int i = 0; i < 2; i++){
+        for(int j = 0; j < 2; j++){
+            printf("%.2f ", matrizA[i][j]);
+        }
+        printf("\n");
+    }
+    printf("Matriz B: \n");
+    for(int i = 0; i < 2; i++){
+        for(int j = 0; j < 2; j++){
+            printf("%.2f ", matrizB[i][j]);
+        }
+        printf("\n");
+    }
+}
+```
+
+## Strings
+
+## 1)
+
+```c
+#include <stdio.h>
+
+/*Faça um programa que leia uma string e a imprima.*/
+
+int main(){
+    char string[80];
+    printf("Insira uma string: ");
+    fgets(string, 80, stdin);
+    printf("%s", string);
+    return 0;
+}
+```
+
+## 2)
+
+```c
+#include <stdio.h>
+
+/*Faça um programa que conte o número de 1’s que aparecem em uma string. Exemplo:
+“0011001” -> 3*/
+
+int countOnes(char vet[100]);
+
+int main(){
+    char binario[100];
+    printf("Insira uma string de 0's e 1's: ");
+    fgets(binario, 100, stdin);
+    printf("Existem %d 1's na string\n", countOnes(binario));
+    return 0;
+}
+
+int countOnes(char vet[100]){
+    int ones = 0;
+    for(int i=0; vet[i]!='\0'; i++){
+        if(vet[i] == '1') ones++;
+    }
+    return ones;
+}
+```
+
+## 3)
+
+```c
+#include <stdio.h>
+
+/*Faça um programa que receba uma palavra e a imprima de trás-para-frente*/
+
+void reverseString(char origem[100], char destino[100]);
+
+int main(){
+    char normal[100], inverso[100];
+    printf("Insira uma string: ");
+    fgets(normal, 100, stdin);
+    reverseString(normal, inverso);
+    printf("%s", inverso);
+    return 0;
+}
+
+void reverseString(char origem[100], char destino[100]){
+    int tamanho, i;
+    for(tamanho = 0; origem[tamanho]!='\0'; tamanho++);
+    for(i = 0; i <= tamanho; i++){
+        destino[i] = origem[tamanho - (i+1)];
+    }
+}
+```
+
+## 4)
+
+```c
+#include <stdio.h>
+
+/*Faça um programa que receba uma palavra e calcule quantas vogais (a, e, i, o, u) possui essa
+palavra. Entre com um caractere (vogal ou consoante) e substitua todas as vogais da palavra
+dada por esse caractere.*/
+
+int isVowel(char i);
+int countVowel(char *string);
+void printVowelsChanged(char *string, char c);
+
+int main(){
+    char palavra[100], substitui;
+    int vogais;
+    printf("Digite uma palavra: ");
+    fgets(palavra, 100, stdin);
+    vogais = countVowel(palavra);
+    printf("Insira um caracter para substituir as vogais: ");
+    fflush(stdin);
+    scanf("%c", &substitui);
+    printf("%d vogais foram substituidas por '%c'\n", vogais, substitui);
+    printVowelsChanged(palavra, substitui);
+
+    return 0;
+}
+
+isVowel(char i){
+    switch (i)
+    {
+    case 'a':
+    case 'A':
+        return 1;
+        break;
+    case 'e':
+    case 'E':
+        return 1;
+        break;
+    
+    case 'i':
+    case 'I':
+        return 1;
+        break;
+    
+    case 'o':
+    case 'O':
+        return 1;
+        break;
+
+    case 'u':
+    case 'U':
+        return 1;
+        break;
+    
+    default:
+        return 0;
+        break;
+    }
+}
+
+countVowel(char *string){
+    int vowels = 0, i;
+    for(i = 0; string[i] != '\0'; i++){
+        if(isVowel(string[i])) vowels++;
+    }
+    return vowels;
+}
+
+printVowelsChanged(char *string, char c){
+    for(int i = 0; string[i] != '\0'; i++){
+        if(isVowel(string[i])) string[i] = c;
+    }
+    printf("%s", string);
+}
+```
+
+## 5)
+
+```c
+#include <stdio.h>
+
+/*Escreva um programa para converter uma cadeia de caracteres de letras maiúsculas em letras
+minúsculas. Dica: some 32 dos caracteres cujo código ASCII está entre 65 e 90.*/
+
+void converteMinusculo(char *stringOrigem, char *stringDestino);
+
+int main(){
+    char stringInserida[100], stringConvertida[100];
+    printf("Escreva: ");
+    fgets(stringInserida, 100, stdin);
+    converteMinusculo(stringInserida, stringConvertida);
+    printf("Convertido: %s", stringConvertida);
+    return 0;
+}
+
+void converteMinusculo(char *stringOrigem, char *stringDestino){
+    for(int i = 0; stringOrigem[i] != '\0'; i++){
+        if(stringOrigem[i] >= 65 && stringOrigem[i] <= 95){
+            stringDestino[i] = stringOrigem[i] + 32;
+        }else{
+            stringDestino[i] = stringOrigem[i];
+        }
+    }
+}
+```
+
+## 6)
+
+```c
+#include <stdio.h>
+
+/* Leia uma cadeia de caracteres e converta todos os caracteres para maiúscula. Dica: subtraia
+32 dos caracteres cujo código ASCII está entre 97 e 122.*/
+
+void converteMaiusculo(char *stringOrigem, char *stringDestino);
+
+int main(){
+    char stringInserida[100], stringConvertida[100];
+    printf("Escreva: ");
+    fgets(stringInserida, 100, stdin);
+    converteMaiusculo(stringInserida, stringConvertida);
+    printf("Convertido: %s", stringConvertida);
+    return 0;
+}
+
+void converteMaiusculo(char *stringOrigem, char *stringDestino){
+    for(int i = 0; stringOrigem[i] != '\0'; i++){
+        if(stringOrigem[i] >= 97 && stringOrigem[i] <= 122){
+            stringDestino[i] = stringOrigem[i] - 32;
+        }else{
+            stringDestino[i] = stringOrigem[i];
+        }
+    }
+}
+```
+
+## 7)
+
+```c
+#include <stdio.h>
+
+/*Leia um vetor contendo letras de uma frase inclusive os espaços em branco. Retirar os
+espaços em branco do vetor e depois escrever o vetor resultante.*/
+
+void removeSpaces(char *stringOrigem, char *stringDestino);
+
+int main(){
+    char stringInserida[100], stringConvertida[100];
+    printf("Escreva: ");
+    fgets(stringInserida, 100, stdin);
+    removeSpaces(stringInserida, stringConvertida);
+    printf("Convertido: %s", stringConvertida);
+    return 0;
+}
+
+void removeSpaces(char *stringOrigem, char *stringDestino){
+    int j = 0, i;
+    for(i = 0; stringOrigem[i] != '\0'; i++){
+        if(stringOrigem[i] != ' '){
+            stringDestino[j] = stringOrigem[i];
+            j++;
+        }
+    }
+    stringDestino[j+1] = '\0';
+}
+```
+
+## 8)
+
+```c
+#include <stdio.h>
+
+/*Faça um programa em que troque todas as ocorrências de uma letra L1 pela letra L2 em
+uma string. A string e as letras L1 e L2 devem ser fornecidas pelo usuário*/
+
+void changeChar(char *string, char L1, char L2);
+
+int  main(){
+    char palavra[100], L1, L2;
+    printf("Escreva: ");
+    fgets(palavra, 100, stdin);
+    fflush(stdin);
+    printf("Insira o caracter a ser substituida: ");
+    scanf("%c", &L1);
+    fflush(stdin);
+    printf("Insira o caracter que substituira: ");
+    scanf("%c", &L2);
+    changeChar(palavra, L1, L2);
+    printf("%s", palavra);
+
+    return 0;
+}
+
+void changeChar(char *string, char L1, char L2){
+    for(int i = 0; string[i] != '\0'; i++){
+        if(string[i] == L1){
+            string[i] = L2;
+        }
+    }
+}
+```
+
+## 9)
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+/*Faça um programa que preencha uma matriz de string com os modelos de cinco carros
+(exemplos de modelos: Fusca, Gol, Vectra, etc.). Em seguida, preencha um vetor com o consumo
+desses carros, isto é, quantos quilômetros cada um deles faz com um litro de combustível.
+Calcule e mostre:
+a) O modelo de carro mais econômico;
+b) Quantos litros de combustível cada um dos carros cadastrados consome para
+percorrer uma distância de 1.000 quilômetros.
+*/
+
+int  main(){
+    char modelos[5][100];
+    float km[5];
+    int i, maisEconomicoPos = 0, maisEconomico;
+
+    printf("Insira 5 modelos de carro:\n");
+    for(i = 0; i < 5; i++){
+        fflush(stdin);
+        fgets(modelos[i], 100, stdin);
+        modelos[i][strlen(modelos[i])-1] = '\0';
+    }
+
+    printf("Insira os respectivos consumos (Km/L):\n");
+    for(i = 0; i < 5; i++){
+        scanf("%f", &km[i]);
+        if(i == 0){
+            maisEconomico = km[i];
+            maisEconomicoPos = i;
+        }
+        else if(km[i] > maisEconomico){
+            maisEconomico = km[i];
+            maisEconomicoPos = i;
+        }
+    }
+
+    printf("O carro mais economico eh o %s!\n", modelos[maisEconomicoPos]);
+    printf("Para percorrer 1000Km:\n");
+    for(i = 0; i < 5; i++){
+        printf(" -> O %s consome %.2fL\n", modelos[i], 1000.0/(km[i]));
+    }
+    
+    return 0;
+}
+```
+
+## 10)
+
+```c
+#include <stdio.h>
+
+/*Ler o nome e o valor de uma determinada mercadoria de uma loja. Sabendo que o desconto
+para pagamento à vista é de 10% sobre o valor total, calcular o valor a ser pago à vista. Escrever
+o nome da mercadoria, o valor total, o valor do desconto e o valor a ser pago à vista.*/
+
+int main(){
+    char produto[100];
+    float valor;
+    printf("Insira o nome do produto: ");
+    fgets(produto, 100, stdin);
+    printf("Insira o valor do produto: ");
+    scanf("%f", &valor);
+    printf("Produto: %s", produto);
+    printf("Valor total: R$%.2f\n", valor);
+    printf("Valor do desconto: R$%.2f\n", valor*0.1);
+    printf("Valor a vista: R$%.2f\n", valor*0.9);
+
+    return 0;
+}
+```
+
+## 11)
+
+```c
+#include <stdio.h>
+
+/*Escreva um programa que recebe uma string S e inteiros não-negativos i e j e imprima o 
+segmento S[i..j].*/
+
+void printRange(char *s, int i, int j);
+
+int main(){
+    char string[100];
+    int i, j;
+    fgets(string, 100, stdin);
+    printf("Insira o intervalo a ser printado [i-j]:");
+    scanf("%d %d", &i, &j);
+    printRange(string, i, j);
+    return 0;
+}
+
+void printRange(char *s, int i, int j){
+    if(i < 0 || j < 0){
+        printf("Invetervalo invalido\n");
+        return;
+    }
+    for(int k = i; k < j; k++){
+        printf("%c", s[k]);
+    }
+    printf("\n");
+}
+```
+
+## 12)
+
+```c
+#include <stdio.h>
+
+/*O código de César é uma das mais simples e conhecidas técnicas de criptografia. É um tipo 
+de substituição na qual cada letra do texto substituída por outra, que se apresenta no alfabeto 
+abaixo dela um número fixo de vezes. Por exemplo, com uma troca de três posições, ‘A’ seria 
+substituído por ‘D’, ‘B’ se tornaria ‘E’, e assim por diante. Implemente um programa que faça 
+uso desse Código de César (3 posições), entre com uma string e retorne a string codificada. 
+Exemplo:
+String: a ligeira raposa marrom saltou sobre o cachorro cansado
+Nova string: D OLJHLUD UDSRVD PDUURP VDOWRX VREUH R FDFKRUUR FDQVDGR
+*/
+
+void encryptCesar(char *s);
+
+int main(){
+    char string[300];
+    printf("Insira o texto a ser criptografado: ");
+    fgets(string, 300, stdin);
+    encryptCesar(string);
+    printf("Texto criptografado: %s", string);
+    return 0;
+}
+
+void encryptCesar(char *s){
+    for(int i = 0; s[i] != '\0'; i++){
+        if(s[i] >= 65 && s[i] <= 90){
+            s[i] += 3;
+            if(s[i] > 90) s[i] -= 28;
+        }else if(s[i] >= 97 && s[i] <= 122){
+            s[i] += 3;
+            if(s[i] > 122) s[i] -= 28;
+        }
+    }
+}
+```
+
+## 13)
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+/*Faça um programa que, dada uma string, diga se ela é um palíndromo ou não. Lembrando 
+que um palíndromo é uma palavra que tenha a propriedade de poder ser lida tanto da direita 
+para a esquerda como da esquerda para a direita.*/
+
+int ehPalindromo(char *s);
+void removeSpacesSpecialsUppers(char *s, char *newString);
+
+int main(){
+    char string[100];
+    printf("Insira um texto/palavra: ");
+    fgets(string, 100, stdin);
+    if(ehPalindromo(string)) printf("Eh palindromo\n");
+    else printf("Nao eh palindromo\n");
+    
+    return 0;
+}
+
+int ehPalindromo(char *s){
+    char newString[strlen(s)];
+    removeSpacesSpecialsUppers(s, newString);
+    int palindromo = 1, tamanho = strlen(newString);
+    for(int i = 0; i < tamanho; i++){
+        if(newString[i] != newString[tamanho-i-1]){
+            palindromo = 0;
+            break;
+        }
+    }
+    return palindromo;
+}
+
+void removeSpacesSpecialsUppers(char *oldString, char *newString){
+    int j = 0;
+    for(int i = 0; oldString[i] != '\0'; i++){
+        if(oldString[i] >= 97 && oldString[i] <= 122){
+            newString[j] = oldString[i];
+            j++;
+        }else if(oldString[i] >= 65 && oldString[i] <= 90){
+            newString[j] = oldString[i] + 32;
+            j++;
+        }
+    }
+    newString[j] = '\0';
+}
+```
+
+## 14)
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+/*Implemente um programa que leia duas strings, str1 e str2, e um valor inteiro positivo N. 
+Concatene não mais que N caracteres da string str2 à string str1 e termine str1 com ‘\0’*/
+
+void concat(char *stringA, char *stringB, int n);
+
+int main(){
+    char stringA[100], stringB[100];
+    int n;
+
+    printf("Insira a 1a string: ");
+    fgets(stringA, 100, stdin);
+    printf("Insira a 2a string: ");
+    fgets(stringB, 100, stdin);
+    printf("Quantos caracteres serao concatenados: ");
+    scanf("%d", &n);
+
+    concat(stringA, stringB, n);
+    printf("%s", stringA);
+    
+    return 0;
+}
+
+void concat(char *stringA, char *stringB, int n){
+    int tamanhoA = strlen(stringA)-1, i;
+    for(i = 0; i < n; i++){
+        stringA[tamanhoA + i] = stringB[i];
+    }
+    stringA[tamanhoA + i] = '\0';
+}
+```
+
+## 15)
+
+```c
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+/*. 
+Faça um programa que contenha um menu com as seguintes opções:
+a) Ler uma string S1 (tamanho máximo 20 caracteres);
+b) Imprimir o tamanho da string S1;
+c) Comparar a string S1 com uma nova string S2 fornecida pelo usuário e imprimir o 
+resultado da comparação;
+d) Concatenar a string S1 com uma nova string S2 e imprimir na tela o resultado da 
+concatenação;
+e) Imprimir a string S1 de forma reversa;
+f) Contar quantas vezes um dado caractere aparece na string S1. Esse caractere desse 
+ser informado pelo usuário;
+g) Substituir a primeira ocorrência do caractere C1 da string S1 pelo caractere C2. Os 
+caracteres C1 e C2 serão lidos pelo usuário;
+h) Verificar se uma string S2 é substring de S1. A string S2 deve ser informada pelo 
+usuário;
+i) Retornar uma substring da string S1. Para isso o usuário deve informar a partir de 
+qual posição deve ser criada a substring e qual é o tamanho da substring.
+*/
+
+char imprimeMenu();
+int compareString(char *string1, char *string2);
+void concatString(char *string1, char *string2, char *string3);
+void reverseString(char *string1, char *string2);
+int countChar(char *string1, char c);
+void substitue(char *string1, char c1, char c2);
+int isSubstring(char *string1, char *string2);
+void substring(char *string1, char * string3, int pos, int tamanho);
+
+int main(){
+    char string1[20], string2[20], string3[40], c1, c2;
+    int pos, tamanho;
+    char menuOption;
+
+    while((menuOption = imprimeMenu()) != '0'){
+        switch(menuOption){
+            case 'a':
+            case 'A':
+                printf("Insira a string S1: ");
+                fflush(stdin);
+                fgets(string1, 20, stdin);
+                system("pause");
+                break;
+            case 'b':
+            case 'B':
+                printf("O tamanho da string S1 eh de %d caracteres\n", (int)(strlen(string1)-1));
+                system("pause");
+                break;
+            case 'c':
+            case 'C':
+                printf("Insira a string S2: ");
+                fflush(stdin);
+                fgets(string2, 20, stdin);
+                if(compareString(string1, string2)) printf("S1 e S2 sao iguais\n");
+                else printf("S1 e S2 sao diferentes\n");
+                system("pause");
+                break;
+            case 'd':
+            case 'D':
+                printf("Insira a string S2: ");
+                fflush(stdin);
+                fgets(string2, 20, stdin);
+                concatString(string1, string2, string3);
+                printf("%s", string3);
+                system("pause");
+                break;
+            case 'e':
+            case 'E':
+                reverseString(string1, string3);
+                printf("%s\n", string3);
+                system("pause");
+                break;
+            case 'f':
+            case 'F':
+                printf("Insira o caracter a contar: ");
+                fflush(stdin);
+                scanf("%c", &c1);
+                printf("'%c' aparece %d vez(es) em S1\n", c1, countChar(string1, c1));
+                system("pause");
+                break;
+            case 'g':
+            case 'G':
+                printf("Insira o caracter a ser substituido em S1: ");
+                fflush(stdin);
+                scanf("%c", &c1);
+                printf("Insira o caracter a substituir '%c' em S1: ", c1);
+                fflush(stdin);
+                scanf("%c", &c2);
+                substitue(string1, c1, c2);
+                printf("%s", string1);
+                system("pause");
+                break;
+            case 'h':
+            case 'H':
+                printf("Insira a string S2: ");
+                fflush(stdin);
+                fgets(string2, 20, stdin);
+                if(isSubstring(string1, string2)) printf("S2 eh substring de S1\n");
+                else printf("S2 nao eh substring de S1\n");
+                system("pause");
+                break;
+                break;
+            case 'i':
+            case 'I':
+                printf("Insira a posicao da substring de S1: ");
+                scanf("%d", &pos);
+                printf("Insira a o tamanho da substring de S1: ");
+                scanf("%d", &tamanho);
+                substring(string1, string3, pos, tamanho);
+                printf("%s", string3);
+                system("pause");
+                break;
+                break;
+        }
+    }
+    return 0;
+}
+
+char imprimeMenu(){
+    char menuOption;
+    do{
+        printf("a - Ler uma string S1 (tamanho maximo 20 caracteres)\n");
+        printf("b - Imprimir o tamanho da string S1\n");
+        printf("c - Comparar a string S1 com uma nova string S2 \n");
+        printf("d - Concatenar a string S1 com uma nova string S2 e imprimir na tela o resultado da concatenacao\n");
+        printf("e - Imprimir a string S1 de forma reversa\n");
+        printf("f - Contar quantas vezes um dado caractere aparece na string S1\n");
+        printf("g - Substituir a primeira ocorrencia de um caractere da string S1 por outro caractere\n");
+        printf("h - Verificar se uma string S2 eh substring de S1\n");
+        printf("i - Retornar uma substring da string S1. Informar a partir de qual posicao deve ser criada a substring e o tamanho da substring\n");
+        printf("0 - Finalizar o programa\n");
+        printf("Insira a operacao desejada: ");
+        fflush(stdin);
+        scanf("%c", &menuOption);
+    }while(!((menuOption >= 'a' && menuOption <= 'i') || (menuOption >= 'A' && menuOption <= 'I') || menuOption == '0'));
+    return menuOption;
+}
+
+int compareString(char *string1, char *string2){
+    for(int i=0; string1[i] != '\0'; i++){
+        if(string1[i] != string2[i]){
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void concatString(char *string1, char *string2, char *string3){
+    int i, j;
+    for(i = 0; string1[i] != '\0'; i++){
+        string3[i] = string1[i];
+    }
+    for(j = 0; string2[j] != '\0'; j++){
+        string3[i+j-1] = string2[j];
+    }
+}
+
+void reverseString(char *string1, char *string2){
+    int i, j = 0;
+    for(i = strlen(string1)-2; string1[i] >= 0; i--){
+        string2[j] = string1[i];
+        j++;
+    }
+    string2[i] = '\0';
+}
+
+int countChar(char *string1, char c1){
+    int count = 0, i;
+    for(i = 0; string1[i] != '\0'; i++){
+        if(string1[i] == c1) count++;
+    }
+    return count;
+}
+
+void substitue(char *string1, char c1, char c2){
+    int i = 0;
+    for(i = 0; string1[i] != '\0'; i++){
+        if(string1[i] == c1){
+            string1[i] = c2;
+            break;
+        }
+    }
+}
+
+int isSubstring(char *string1, char *string2){
+    int i, j;
+    int tm1 = strlen(string1) - 1, tm2 = strlen(string2) - 1;
+    char string3[tm2+2];
+    for(i = 0; i < tm1-tm2+1; i++){
+        for(j = 0; j < tm2; j++){
+            string3[j] = string1[j+i];
+        }
+        string3[j] = '\n';
+        string3[j+1] = '\0';
+        if(compareString(string2, string3)) return 1;
+    }
+    return 0;
+}
+
+void substring(char *string1, char * string3, int pos, int tamanho){
+    int i = pos, j = 0;
+    for(i = pos; i < pos+tamanho; i++){
+        string3[j] = string1[i];
+        j++;
+    }
+    string3[j] = '\n';
+    string3[j+1] = '\0';
+}
+```
+
+## 16)
+
+```c
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+/*. 
+Faça um programa que encontre o conjunto de 5 dígitos consecutivos na sequência abaixo 
+que gere o maior produto
+*/
+
+int main(){
+    char seq[1000] = "7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530";
+    int maior = 1, prod = 1, i, j, posicao;
+
+    for(i = 0; seq[i] != '\0'; i++){
+        prod = 1;
+        if(i == 0){
+            maior *= (seq[i]-'0');
+            posicao = 0;
+        }else{
+            for(j = i; j < i+5; j++){
+                prod *= (seq[j]-'0');
+            }
+            if(prod > maior) {
+                maior = prod;
+                posicao = i;
+            }
+        }
+    }
+
+    printf("A sequencia com maior produto eh:\n");
+    for(i = posicao; i < posicao+5; i++){
+        printf("A[%d] = %c\n", i, seq[i]);
+    }
+    printf("produto = %d\n", maior);
+
+    return 0;
+}
+```
