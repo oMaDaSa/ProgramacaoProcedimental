@@ -1,0 +1,180 @@
+## 2)
+
+```c
+#include <stdio.h>
+
+/*
+Escreva um programa que declare um inteiro, um real e um char, e
+ponteiros para inteiro, real e char. Associe as variáveis aos ponteiros (use
+&). Modifique os valores de cada variável usando os ponteiros. Imprima os
+valores das variáveis antes e após a modificação.
+*/
+
+int main(){
+    int inteiro, *pInteiro = &inteiro;
+    float real, *pReal = &real;
+    char caracter, *pCaracter = &caracter;
+
+    *pInteiro = 2;
+    *pReal = 2.5;
+    *pCaracter = 'a';
+
+    *pInteiro += 1;
+    *pReal += 1;
+    *pCaracter += 1;
+
+    printf("Inteiro: %d -> %d\n", inteiro-1, *pInteiro);
+    printf("Real: %.1f -> %.1f\n", real-1, *pReal);
+    printf("Caracter: %c -> %c\n", caracter-1, *pCaracter);
+
+    return 0;
+}
+```
+
+## 3)
+
+```c
+#include <stdio.h>
+
+/*
+Escreva um programa que contenha duas variáveis inteiras. Compare seus
+endereços e exiba o maior endereço.
+*/
+
+int main(){
+    int x, y;
+    if(&x > &y) printf("%p (endereco de x) eh maior\n", &x);
+    else printf("%p (endereco de y) eh maior\n", &y);
+    return 0;
+}
+```
+
+## 4)
+
+```c
+#include <stdio.h>
+
+/*
+Escreva um programa que contenha duas variáveis inteiras. Leia essas
+variáveis do teclado. Em seguida, compare seus endereços e exiba o
+conteúdo do maior endereço
+*/
+
+int main(){
+    int x, y;
+
+    printf("Insira x: "); 
+    scanf("%d", &x);
+    printf("Insira y: "); 
+    scanf("%d",&y);
+
+    if(&x > &y) printf("%d eh conteudo do endereco de x\n", x);
+    else printf("%d eh conteudo do endereco de y\n", y);
+    return 0;
+}
+```
+
+## 5)
+
+```c
+#include <stdio.h>
+
+/*
+Faça um programa que leia dois variáveis do tipo inteiro (A e B) e duas do
+tipo ponteiro de inteiro apontando para essas variáveis. Utilizando ponteiros,
+o programa deve retornar a soma do dobro dos dois números lidos. O dobro
+de A na própria variável A e o dobro de B na própria variável B.
+*/
+
+int main(){
+    int a, b, soma;
+    int *pa = &a, *pb = &b;
+
+    printf("Digite o valor de A e B: ");
+    scanf("%d %d", pa, pb);
+    soma = (*pa *= 2) + (*pb *= 2);
+
+    printf("2A+2B = %d\n", soma);
+
+    return 0;
+}
+```
+
+## 6)
+
+```c
+#include <stdio.h>
+
+/*
+Escreva um programa que declare duas variáveis do tipo inteiro e duas do
+tipo ponteiro de inteiro apontando para essas variáveis. Utilizando ponteiros,
+o programa deve ler dois números para essas variáveis e os imprimir,
+realizando as quatro operações básicas de matemática com esses números
+*/
+
+int main(){
+    int a, b, soma, mult, sub;
+    int *pa = &a, *pb = &b;
+    float div;
+
+    printf("Digite o valor de A e B: ");
+    scanf("%d %d", pa, pb);
+
+    soma = *pa + *pb;
+    sub = *pa - *pb;
+    mult = *pa * *pb;
+    div = (float) *pa / *pb;
+
+    printf("%d+%d = %d\n",*pa, *pb, soma);
+    printf("%d-%d = %d\n",*pa, *pb, sub);
+    printf("%d*%d = %d\n",*pa, *pb, mult);
+    printf("%d/%d = %.2f\n",*pa, *pb, div);
+
+    return 0;
+}
+```
+
+## 7)
+
+```c
+#include <stdio.h>
+
+int main(){
+    int a, b, c;
+    int *pa = &a, *pb = &b, *pc = &c;
+
+    printf("Insira A, B e C: ");
+    scanf("%d %d %d", pa, pb, pc);
+
+    if(a < b && b < c) printf("%d - %p \n%d - %p \n %d - %p", a, pa, b, pb, c, pc);
+    else if(a < c && c < b) printf("%d - %p \n%d - %p \n%d - %p", a, pa, c, pc, b, pb);
+    else if(b < a && a < c) printf("%d - %p \n%d - %p \n%d - %p", b, pb, a, pa, c, pc);
+    else if(b < c && c < a) printf("%d - %p \n%d - %p \n%d - %p", b, pb, c, pc, a, pa);
+    else if(c < a && a < b) printf("%d - %p \n%d - %p \n%d - %p", c, pa, a, pa, b, pb);
+    else if(c < b && b < a) printf("%d - %p \n%d - %p \n%d - %p", c, pc, b, pb, c, pc);
+
+    return 0;
+}
+```
+
+## 8)
+
+```c
+#include <stdio.h>
+
+int main(){
+
+    int V[6], i, *pV = &V[0];
+
+    for(i = 0; i < 6; i++){
+        printf("Insira V[%i]: ", i);
+        scanf("%d", pV + i);
+    }
+
+    for(i = 0; i < 6; i++){
+        printf("V[%d] = %d - %p\n", i, *(pV+i), pV + i);
+    }
+
+    return 0;
+}
+```
