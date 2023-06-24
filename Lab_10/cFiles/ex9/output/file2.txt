@@ -1,0 +1,3 @@
+vanessa, 1, 92
+henrique, 0, 0
+giovana, 5, 8

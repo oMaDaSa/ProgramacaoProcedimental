@@ -1,0 +1,4 @@
+arroz: 15.90
+feijao preto: 4.10
+suco de goiaba 100% natural gostoso: 100.00
+ 

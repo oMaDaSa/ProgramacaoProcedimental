@@ -1,0 +1,5 @@
+uberlandia, 985
+araguari, 200
+tokyo, 5924
+paris, 20
+sao paulo, 12200406
