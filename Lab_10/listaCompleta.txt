@@ -1,0 +1,1122 @@
+## 1)
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+/*Escreva um programa que:
+a) Crie/abra um arquivo texto de nome “arq.txt”;
+b) Permita que o usuário grave diversos caracteres nesse arquivo, até
+que o usuário entre com o caractere ‘0’;
+c) Feche o arquivo.
+Agora, abra e leia o arquivo, caractere por caractere, e escreva na tela
+todos os caracteres armazenados.*/
+
+int main(){
+    FILE *arq;
+    char inputChar, getChar;
+    arq = fopen("arq.txt","w");
+    do{
+        printf("Insira um caracter: ");
+        setbuf(stdin,NULL);
+        scanf("%c", &inputChar);
+        if(inputChar != '0') putc(inputChar, arq);
+    }while(inputChar != '0');
+    fclose(arq);
+
+    arq = fopen("arq.txt","r");
+    while((getChar = getc(arq)) != EOF){
+        printf("%c",getChar);
+    }
+    fclose(arq);
+    return 0;
+}
+```
+
+## 2)
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+/*Faça um programa que receba do usuário um arquivo texto e mostre na
+tela quantas linhas esse arquivo possui.*/
+
+int main(){
+    FILE *arq;
+    char fileName[100], contaLinhas = 1;
+
+    printf("Digite o nome do arquivo: ");
+    fgets(fileName, 100, stdin);
+    fileName[strlen(fileName)-1] = '\0';
+    strcat(fileName,".txt");
+
+    if((arq = fopen(fileName,"r")) == NULL){ 
+        printf("Arquivo nao existe\n"); exit(1);
+    }
+    while(!feof(arq)){
+        fseek(arq, 1, SEEK_CUR);
+        if(getc(arq) == '\n') contaLinhas++;
+    }
+    
+    printf("O arquivo tem %d linhas\n", contaLinhas);
+    
+    return 0;
+}
+```
+
+## 3)
+
+```c
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+
+/*Faça um programa que receba do usuário um arquivo texto e mostre na
+tela quantas letras são vogais.*/
+
+int main(){
+    FILE *arq;
+    char fileName[100];
+    int qtdVogais = 0;
+
+    printf("Digite o nome do arquivo: ");
+    fgets(fileName, 100, stdin);
+    fileName[strlen(fileName)-1] = '\0';
+    strcat(fileName,".txt");
+
+    if((arq = fopen(fileName,"r")) == NULL){ 
+        printf("Arquivo nao existe\n"); exit(1);
+    }
+    while(!feof(arq)){
+        switch(getc(arq)){
+            case 'a':
+            case 'e':
+            case 'i':
+            case 'o':
+            case 'u':
+            case 'A':
+            case 'E':
+            case 'I':
+            case 'O':
+            case 'U':
+                qtdVogais++;
+                break;
+            default:
+                break;
+        }
+    }
+
+    fclose(arq);
+    printf("O arquivo %s tem %d vogais\n",fileName, qtdVogais);
+    return 0;
+}
+```
+
+## 4)
+
+```c
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+
+/*Faça um programa que receba do usuário um arquivo texto e mostre na
+tela quantas letras são vogais e quantas são consoantes.*/
+
+int main(){
+    FILE *arq;
+    char fileName[100], c;
+    int qtdVogais = 0, qtdConsoantes = 0;
+
+    printf("Digite o nome do arquivo: ");
+    fgets(fileName, 100, stdin);
+    fileName[strlen(fileName)-1] = '\0';
+    strcat(fileName,".txt");
+
+    if((arq = fopen(fileName,"r")) == NULL){ 
+        printf("Arquivo nao existe\n"); exit(1);
+    }
+    
+    while(!feof(arq)){
+        c = getc(arq);
+        switch(c){
+            case 'a':
+            case 'e':
+            case 'i':
+            case 'o':
+            case 'u':
+            case 'A':
+            case 'E':
+            case 'I':
+            case 'O':
+            case 'U':
+                qtdVogais++;
+                break;
+            default:
+                if((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) qtdConsoantes++;
+                break;
+        }
+    }
+
+    fclose(arq);
+    printf("O arquivo %s tem %d vogais e %d consoantes\n",fileName, qtdVogais, qtdConsoantes);
+    return 0;
+}
+```
+
+## 5)
+
+```c
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+
+/*Faça um programa que receba do usuário um arquivo texto e um
+caractere. Mostre na tela quantas vezes aquele caractere ocorre dentro
+do arquivo*/
+
+int main(){
+    FILE *arq;
+    char fileName[100], c;
+    int conta = 0;
+
+    printf("Digite o nome do arquivo: ");
+    fgets(fileName, 100, stdin);
+    fileName[strlen(fileName)-1] = '\0';
+    strcat(fileName,".txt");
+
+    if((arq = fopen(fileName,"r")) == NULL){ 
+        printf("Arquivo nao existe\n"); exit(1);
+    }
+
+    printf("Insira o caracter a buscar dentro do arquivo: ");
+    c = getchar();
+    
+    while(!feof(arq)){
+        if(getc(arq) == c) conta++;
+    }
+
+    fclose(arq);
+    printf("O caracter %c aparece %d vezes no arquivo\n", c, conta);
+    return 0;
+}
+```
+
+## 6)
+
+```c
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+
+/*Faça um programa que receba do usuário um arquivo texto e mostre na
+tela quantas vezes cada letra do alfabeto aparece dentro do arquivo.*/
+
+int main(){
+    FILE *arq;
+    char fileName[100], alfabeto[26];
+    int c;
+
+    printf("Digite o nome do arquivo: ");
+    fgets(fileName, 100, stdin);
+    fileName[strlen(fileName)-1] = '\0';
+    strcat(fileName,".txt");
+
+    if((arq = fopen(fileName,"r")) == NULL){ 
+        printf("Arquivo nao existe\n"); 
+        exit(1);
+    }
+
+    for(int i = 0; i < 26; i++){
+        alfabeto[i] = 0;
+    }
+    
+    while(!feof(arq)){
+        c = getc(arq);
+        if((c >= 'a' && c <= 'z')){
+            alfabeto[(int)(c-'a')]++;
+        }
+        else if( (c >= 'A' && c <= 'Z')){
+            alfabeto[(int)(c-'A')]++;
+        }
+    }
+
+    fclose(arq);
+
+    for(int i = 0; i < 26; i++){
+        printf("%c = %d\n",'a'+i, alfabeto[i]);
+    }
+    
+    return 0;
+}
+```
+
+## 7)
+
+```c
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+
+/*Faça um programa que receba do usuário um arquivo texto. Crie outro
+arquivo texto contendo o texto do arquivo de entrada, mas com as
+vogais substituídas por ‘*’.*/
+
+int main(){
+    FILE *arq, *arqCopy;
+    char fileName[100], fileNameCopy[100];
+    char c;
+
+    printf("Digite o nome do arquivo: ");
+    fgets(fileName, 100, stdin);
+    fileName[strlen(fileName)-1] = '\0';
+    strcpy(fileNameCopy, fileName);
+    strcat(fileName,".txt");
+    strcat(fileNameCopy,"Copy.txt");
+
+    if((arq = fopen(fileName,"r")) == NULL){ 
+        printf("Arquivo nao existe\n"); 
+        exit(1);
+    }
+    if((arqCopy = fopen(fileNameCopy,"w")) == NULL){ 
+        printf("Nao foi possivel criar uma copia do arquivo\n"); 
+        exit(1);
+    }
+    
+    while(!feof(arq)){
+        c = getc(arq);
+        if(c == EOF) break;
+        switch (c){
+        case 'a':
+        case 'e':
+        case 'i':
+        case 'o':
+        case 'u':
+        case 'A':
+        case 'E':
+        case 'I':
+        case 'O':
+        case 'U':
+            putc('*', arqCopy);
+            break;
+        default:
+            putc(c, arqCopy);
+            break;
+        }
+    }
+
+    fclose(arq);
+    fclose(arqCopy);
+    
+    printf("Copia do arquivo com vogais substituidas criada com sucesso!\n");
+    return 0;
+}
+```
+
+## 8)
+
+```c
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+/*Faça um programa que leia o conteúdo de um arquivo e crie um arquivo
+com o mesmo conteúdo, mas com todas as letras minúsculas
+convertidas para maiúsculas. Os nomes dos arquivos serão fornecidos,
+via teclado, pelo usuário. A função que converte maiúscula para
+minúscula é o toupper(). Ela é aplicada em cada caractere da string.*/
+
+int main(){
+    FILE *arq, *arqCopy;
+    char fileName[100], fileNameCopy[100];
+    char c;
+
+    printf("Digite o nome do arquivo: ");
+    fgets(fileName, 100, stdin);
+    fileName[strlen(fileName)-1] = '\0';
+    strcpy(fileNameCopy, fileName);
+    strcat(fileName,".txt");
+    strcat(fileNameCopy,"Copy.txt");
+
+    if((arq = fopen(fileName,"r")) == NULL){ 
+        printf("Arquivo nao existe\n"); 
+        exit(1);
+    }
+    if((arqCopy = fopen(fileNameCopy,"w")) == NULL){ 
+        printf("Nao foi possivel criar uma copia do arquivo\n"); 
+        exit(1);
+    }
+    
+    while(!feof(arq)){
+        c = getc(arq);
+        if(c == EOF) break;
+        if(c >= 'a' && c <= 'z') putc(toupper(c), arqCopy);
+        else putc(c, arqCopy);
+    }
+
+    fclose(arq);
+    fclose(arqCopy);
+    
+    printf("Copia do arquivo com letras maiusculas criada com sucesso!\n");
+    return 0;
+}
+```
+
+## 9)
+
+```c
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+/*Faça um programa que receba dois arquivos do usuário, e crie um
+terceiro arquivo com o conteúdo dos dois primeiros juntos (o conteúdo
+do primeiro seguido do conteúdo do segundo).*/
+
+int main(){
+    FILE *arq1, *arq2, *arqMerge;
+    char fileName1[100], fileName2[100];
+    char c;
+
+    printf("Digite o nome do primeiro arquivo: ");
+    fgets(fileName1, 100, stdin);
+    printf("Digite o nome do segundo arquivo: ");
+    fgets(fileName2, 100, stdin);
+
+    fileName1[strlen(fileName1)-1] = '\0';
+    fileName2[strlen(fileName2)-1] = '\0';
+
+    strcat(fileName1,".txt");
+    strcat(fileName2,".txt");
+
+    if((arq1 = fopen(fileName1,"r")) == NULL){ 
+        printf("Arquivo nao existe\n"); 
+        exit(1);
+    }
+    if((arq2 = fopen(fileName2,"r")) == NULL){ 
+        printf("Arquivo nao existe\n"); 
+        exit(1);
+    }
+    if((arqMerge = fopen("merge.txt","w")) == NULL){ 
+        printf("Nao foi possivel criar o arquivo da juncao\n"); 
+        exit(1);
+    }
+    
+    while(!feof(arq1)){
+        c = getc(arq1);
+        if(c == EOF) break;
+        else putc(c, arqMerge);
+    }
+
+    putc('\n', arqMerge);
+
+    while(!feof(arq2)){
+        c = getc(arq2);
+        if(c == EOF) break;
+        else putc(c, arqMerge);
+    }
+
+    fclose(arq1);
+    fclose(arq2);
+    fclose(arqMerge);
+    
+    printf("Juncao dos arquivos feita com sucesso no arquivo merge.txt!\n");
+    return 0;
+}
+```
+
+## 10)
+
+```c
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+
+/*Faça um programa que receba o nome de um arquivo de entrada e outro
+de saída. O arquivo de entrada contém em cada linha o nome de uma
+cidade (ocupando 40 caracteres) e o seu número de habitantes. O
+programa deverá ler o arquivo de entrada e gerar um arquivo de saída
+onde aparece o nome da cidade mais populosa seguida pelo seu número
+de habitantes.*/
+
+int main(){
+    FILE *arq, *mostPopulous;
+    char fileName[100], cityName[40], name[40], string[100];
+    int biggestPopulation, population, i;
+
+    printf("Digite o nome do arquivo contendo as informacoes das cidades: ");
+    fgets(fileName, 100, stdin);
+
+    fileName[strlen(fileName)-1] = '\0';
+    strcat(fileName,".txt");
+
+    if((arq = fopen(fileName,"r")) == NULL){ 
+        printf("Arquivo nao existe\n"); 
+        exit(1);
+    }
+    if((mostPopulous = fopen("mostPopulous.txt","w")) == NULL){ 
+        printf("Nao foi possivel criar o arquivo da cidade mais populosa\n"); 
+        exit(1);
+    }
+    
+    for(i = 0; !feof(arq); i++){
+        if(i == 0){
+            fgets(string, 100, arq);
+            printf("%s\n", string);
+            strcpy(name, strtok(string, ","));
+            population = atoi(strtok(NULL, ","));
+            biggestPopulation = population;
+            strcpy(cityName, name);
+        }else{
+            fgets(string, 100, arq);
+            strcpy(name, strtok(string, ","));
+            population = atoi(strtok(NULL, ","));
+            if(population > biggestPopulation){
+                biggestPopulation = population;
+                strcpy(cityName, name);
+            }
+        }
+    }
+
+    fprintf(mostPopulous, "%s, %d", cityName, biggestPopulation);
+
+    fclose(arq);
+    fclose(mostPopulous);
+    
+    printf("Cidade mais populosa salva em mostPopulous.txt!\n");
+    return 0;
+}
+```
+
+## 11)
+
+```c
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+
+/*.Faça um programa no qual o usuário informa o nome do arquivo e uma
+palavra, e retorne o número de vezes que aquela palavra aparece no
+arquivo.*/
+
+int main(){
+    FILE *file;
+    char fileName[100], word[100], searchWord[100];
+    int countWord = 0;
+
+    printf("Digite o nome do arquivo: ");
+    fgets(fileName, 100, stdin);
+    setbuf(stdin, NULL);
+    fileName[strlen(fileName)-1] = '\0';
+    strcat(fileName,".txt");
+    if((file = fopen(fileName,"r")) == NULL){ 
+        printf("Arquivo nao existe\n"); 
+        exit(1);
+    }
+
+    printf("Insira a palavra a buscar no arquivo: ");
+    setbuf(stdin, NULL);
+    fgets(word, 100, stdin);
+    word[strlen(word)-1] = '\0';
+
+    while(!feof(file)){
+        (fscanf(file,"%s",searchWord));
+        if((strcmp(searchWord, word)) == 0){
+            countWord++;
+        }
+    }
+    
+    printf("\"%s\" aparece %d vezes no arquivo\n", word, countWord);
+    
+    return 0;
+}
+```
+
+## 12)
+
+```c
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+
+/*Abra um arquivo texto, calcule e escreva o número de caracteres, o
+número de linhas e o número de palavras neste arquivo. Escreva
+também quantas vezes cada letra ocorre no arquivo (ignorando letras
+com acento). Obs.: palavras são separadas por um ou mais caracteres
+espaço, tabulação ou nova linha.*/
+
+int main(){
+    FILE *file;
+    char fileName[100], searchWord[100], c, alfabeto[26];
+    int countWord = 0, countLines = 1;
+
+    printf("Digite o nome do arquivo: ");
+    fgets(fileName, 100, stdin);
+    setbuf(stdin, NULL);
+    fileName[strlen(fileName)-1] = '\0';
+    strcat(fileName,".txt");
+    if((file = fopen(fileName,"r")) == NULL){ 
+        printf("Arquivo nao existe\n"); 
+        exit(1);
+    }
+
+    for(int i = 0; i < 26; i++){
+        alfabeto[i] = 0;
+    }
+
+    while(!feof(file)){
+        (fscanf(file,"%s",searchWord));
+        countWord++;
+    }
+
+    fseek(file,0,SEEK_SET);
+    while(!feof(file)){
+        c = getc(file);
+        if((c >= 'a' && c <= 'z')){
+            alfabeto[(int)(c-'a')]++;
+        }
+        else if((c >= 'A' && c <= 'Z')){
+            alfabeto[(int)(c-'A')]++;
+        }else if(c == '\n') countLines++;
+    }
+    
+    
+    printf("Palavras: %d\n", countWord);
+    for(int i = 0; i < 26; i++){
+        printf("%c = %d\n",'a'+i, alfabeto[i]);
+    }
+    printf("Linhas: %d\n", countLines);
+    
+    return 0;
+}
+```
+
+## 13)
+
+```c
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+
+/*Faça um programa que permita que o usuário entre com diversos nomes
+e telefone para cadastro, e crie um arquivo com essas informações, uma
+por linha. O usuário finaliza a entrada com ‘0’ para o telefone..*/
+
+typedef struct data{
+    char name[60], phone[12];
+}data;
+
+int main(){
+    FILE *file;
+    data data;
+
+    if((file = fopen("file.txt","a")) == NULL){ 
+        printf("Arquivo nao pode ser criado\n"); 
+        exit(1);
+    }
+
+    while(1){
+        printf("Insira o nome: ");
+        setbuf(stdin,NULL);
+        fgets(data.name, 60, stdin);
+        data.name[strlen(data.name)-1] = '\0';
+
+        printf("Insira o telefone (insira '0' para terminar): ");
+        setbuf(stdin,NULL);
+        fgets(data.phone, 60, stdin);
+        data.phone[strlen(data.phone)-1] = '\0';
+
+        if(strcmp(data.phone, "0\0") == 0) break;
+        else{
+            fprintf(file, "%s, ",data.name);
+            fprintf(file, "%s\n",data.phone);
+        }
+    }
+
+    fclose(file);
+
+    return 0;
+}
+```
+
+## 14)
+
+```c
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+/*Dado um arquivo contendo um conjunto de nome e data de nascimento
+(DD MM AAAA), isto é, 3 inteiros em sequência), faça um programa que
+leia o nome do arquivo e a data de hoje e construa outro arquivo
+contendo o nome e a idade de cada pessoa do primeiro arquivo.*/
+
+int verificaData(int dd, int mm, int aa);
+
+int main(){
+    FILE *fileDatas, *fileIdades;
+    char fileName[100], nome[100];
+    int diaAtual, mesAtual, anoAtual;
+    int diaFile, mesFile, anoFile;
+    int idade;
+
+    printf("Digite o nome do arquivo com os nomes e datas: ");
+    fgets(fileName, 100, stdin);
+    setbuf(stdin, NULL);
+    fileName[strlen(fileName)-1] = '\0';
+    strcat(fileName,".txt");
+    if((fileDatas = fopen(fileName,"r")) == NULL){ 
+        printf("Arquivo nao existe\n"); 
+        exit(1);
+    }
+
+    if((fileIdades = fopen("idades.txt","a")) == NULL){ 
+        printf("Arquivo nao pode ser criado\n"); 
+        exit(1);
+    }
+
+    printf("Insira a data de hoje (dd/mm/dddd): ");
+    scanf("%d/%d/%d", &diaAtual, &mesAtual, &anoAtual);
+    if(!verificaData(diaAtual, mesAtual, anoAtual)){
+        printf("Data atual invalida\n");
+        exit(1);
+    }
+
+    while(!feof(fileDatas)){
+        idade = 0;
+        fscanf(fileDatas, "%[^,], %2d/%2d/%4d\n", nome, &diaFile, &mesFile, &anoFile);
+        if(anoFile > anoAtual || (anoFile == anoAtual && mesFile > mesAtual) || (anoFile == anoAtual && mesFile == mesAtual && diaFile > diaAtual) || !verificaData(diaFile, mesFile, anoAtual)){
+            printf("Erro\n");
+            printf("%s com data invalida\n",nome);
+            exit(1);
+        }
+        else if(anoAtual > anoFile){
+            idade += anoAtual - anoFile - 1;
+            anoFile += idade + 1;
+        }
+        if(mesAtual > mesFile && anoFile == anoAtual && idade != 0){
+            idade++;
+        }else if(mesAtual == mesFile && anoFile == anoAtual && idade != 0){
+            if(diaAtual >= diaFile){
+                idade++;
+            }
+        }
+        fprintf(fileIdades, "%s, %d\n",nome, idade);
+    }
+    
+    fclose(fileIdades);
+    fclose(fileDatas);
+    printf("Arquivo de idades criado com sucesso!\n");
+    return 0;
+}
+
+int verificaData(int dd, int mm, int aa){
+    int bissexto = 0;
+
+    if(aa%400 == 0 || (aa%4 == 0 && aa%100 != 0)) bissexto = 1;
+    if(mm < 1 || mm > 12) return 0;
+    else if(dd < 1 || dd > 31) return 0;
+    else if(mm == 2 && bissexto == 1 && dd > 29) return 0;
+    else if(mm == 2 && bissexto == 0 && dd > 28) return 0;
+    else if((mm == 4 || mm == 6 || mm == 9 || mm == 11 ) && dd > 30) return 0;
+
+    return 1;
+}
+```
+
+## 15)
+
+```c
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+/*Faça um programa que receba como entrada o ano corrente e o nome de
+dois arquivos: um de entrada e outro de saída. Cada linha do arquivo de
+entrada contém o nome de uma pessoa (ocupando 40 caracteres) e o
+seu ano de nascimento. O programa deverá ler o arquivo de entrada e
+gerar um arquivo de saída onde aparece o nome da pessoa seguida por
+uma string que representa a sua idade.
+- Se a idade for menor do que 18 anos, escreva “menor de idade”;
+- Se a idade for maior do que 18 anos, escreva “maior de idade”;
+- Se a idade for igual a 18 anos, escreva “entrando na maior idade”.*/
+
+int verificaData(int dd, int mm, int aa);
+
+int main(){
+    FILE *fileDatas, *fileIdades;
+    char fileName[100], nome[100];
+    int diaAtual, mesAtual, anoAtual;
+    int diaFile, mesFile, anoFile;
+    int idade;
+
+    printf("Digite o nome do arquivo com os nomes e datas: ");
+    fgets(fileName, 100, stdin);
+    setbuf(stdin, NULL);
+    fileName[strlen(fileName)-1] = '\0';
+    strcat(fileName,".txt");
+    if((fileDatas = fopen(fileName,"r")) == NULL){ 
+        printf("Arquivo nao existe\n"); 
+        exit(1);
+    }
+
+    if((fileIdades = fopen("idades.txt","a")) == NULL){ 
+        printf("Arquivo nao pode ser criado\n"); 
+        exit(1);
+    }
+
+    printf("Insira a data de hoje (dd/mm/dddd): ");
+    scanf("%d/%d/%d", &diaAtual, &mesAtual, &anoAtual);
+    if(!verificaData(diaAtual, mesAtual, anoAtual)){
+        printf("Data atual invalida\n");
+        exit(1);
+    }
+
+    while(!feof(fileDatas)){
+        idade = 0;
+        fscanf(fileDatas, "%[^,], %2d/%2d/%4d\n", nome, &diaFile, &mesFile, &anoFile);
+        if(anoFile > anoAtual || (anoFile == anoAtual && mesFile > mesAtual) || (anoFile == anoAtual && mesFile == mesAtual && diaFile > diaAtual) || !verificaData(diaFile, mesFile, anoAtual)){
+            printf("Erro\n");
+            printf("%s com data invalida\n",nome);
+            exit(1);
+        }
+        else if(anoAtual > anoFile){
+            idade += anoAtual - anoFile - 1;
+            anoFile += idade + 1;
+        }
+        if(mesAtual > mesFile && anoFile == anoAtual && idade != 0){
+            idade++;
+        }else if(mesAtual == mesFile && anoFile == anoAtual && idade != 0){
+            if(diaAtual >= diaFile){
+                idade++;
+            }
+        }
+        fprintf(fileIdades, "%s, %d",nome, idade);
+        if(idade > 18) fprintf(fileIdades, " - maior de idade\n");
+        else if(idade < 18) fprintf(fileIdades, " - menor de idade\n");
+        else fprintf(fileIdades, " - entrando na maior idade\n");
+    }
+    
+    fclose(fileIdades);
+    fclose(fileDatas);
+    printf("Arquivo de idades criado com sucesso!\n");
+    return 0;
+}
+
+int verificaData(int dd, int mm, int aa){
+    int bissexto = 0;
+
+    if(aa%400 == 0 || (aa%4 == 0 && aa%100 != 0)) bissexto = 1;
+    if(mm < 1 || mm > 12) return 0;
+    else if(dd < 1 || dd > 31) return 0;
+    else if(mm == 2 && bissexto == 1 && dd > 29) return 0;
+    else if(mm == 2 && bissexto == 0 && dd > 28) return 0;
+    else if((mm == 4 || mm == 6 || mm == 9 || mm == 11 ) && dd > 30) return 0;
+
+    return 1;
+}
+```
+
+## 16)
+
+```c
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+
+/*Faça um programa que recebe um vetor de 10 números, converta cada
+um desses números para binário e grave a sequência de 0s e 1s em um
+arquivo texto. Cada número deve ser gravado em uma linha.*/
+
+int main(){
+    FILE *file;
+    int vet[10], i, j, binary[32];
+
+    if((file = fopen("binaryValues.txt","w")) == NULL){ 
+        printf("Arquivo nao pode ser criado\n"); 
+        exit(1);
+    }
+
+    for(i = 0; i < 10; i++){
+        printf("Insira o valor de vet[%d]: ", i);
+        scanf("%d", &vet[i]);
+    }
+
+    for(i = 0; i < 10; i++){
+        int x = 0;
+        while(vet[i] > 0) {
+            binary[x] = vet[i] % 2;
+            vet[i] /= 2;
+            x++;
+        }
+        for(j = x - 1; j >= 0; j--){
+            fprintf(file,"%d",binary[j]);
+        }
+        fprintf(file,"\n");
+    }
+
+    fclose(file);
+    return 1;
+}
+```
+
+## 17)
+
+```c
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+
+/*Faça um programa que leia um arquivo que contenha as dimensões de
+uma matriz (linha e coluna), a quantidade de posições que serão
+anuladas, e as posições a serem anuladas (linha e coluna). O programa
+lê esse arquivo e, em seguida, produz um novo arquivo com a matriz
+com as dimensões dadas no arquivo lido, e todas as posições
+especificadas no arquivo ZERADAS e o restante recebendo o valor 1.*/
+
+int main(){
+    FILE *file, *fileOutput;
+    int **matriz, n, m, qtdAnuladas, *linhaAnulada, *colunaAnulada;
+    char fileName[100], c;
+    int i, j, k;
+
+    printf("Digite o nome do arquivo com as informacoes da matriz: ");
+    fgets(fileName, 100, stdin);
+    setbuf(stdin, NULL);
+    fileName[strlen(fileName)-1] = '\0';
+    strcat(fileName,".txt");
+
+    if((file = fopen(fileName,"r")) == NULL){ 
+        printf("Arquivo nao encontrado\n"); 
+        exit(1);
+    }
+
+    if((fileOutput = fopen("matrizOutput.txt","w")) == NULL){ 
+        printf("Arquivo nao pode ser criado\n"); 
+        exit(1);
+    }
+
+    fscanf(file, "%d %d %d", &m, &n, &qtdAnuladas);
+
+    //aloca matriz
+    if((matriz = (int**)malloc(m*sizeof(int*))) == NULL){
+        printf("Erro de alocacao de memoria\n");
+        exit(1);
+    }for(int i=0;i<m;i++){
+        if((matriz[i] = (int*)malloc(n*sizeof(int))) == NULL){
+            printf("Erro de alocacao de memoria\n");
+            exit(1);
+        }
+    }
+
+    //aloca vetores
+    if((linhaAnulada = (int *)malloc(qtdAnuladas*sizeof(int)))==NULL){
+        printf("Erro de alocacao de memoria\n");
+        exit(1);
+    }
+    if((colunaAnulada = (int *)malloc(qtdAnuladas*sizeof(int)))==NULL){
+        printf("Erro de alocacao de memoria\n");
+        exit(1);
+    }
+
+    //lê as linhas e colunas a receber 0
+    i = 0;
+    while(!feof(file)){
+        while(c = fgetc(file), c != '\n' || c != EOF){
+            if(c == '\n' || c == EOF) break;
+        }
+        fscanf(file, "%d %d", &linhaAnulada[i], &colunaAnulada[i]);
+        i++;
+    }
+
+    //cria a matriz no file
+    for(i=0; i<m; i++){
+        for(j=0; j<n; j++){
+            for(k=0; k<qtdAnuladas; k++){
+                if(i == linhaAnulada[k] && j == colunaAnulada[k]) break;
+            }
+            if(k != qtdAnuladas){
+                fprintf(fileOutput, "%d ", 0);
+            }else{
+                fprintf(fileOutput, "%d ", 1);
+            }
+            
+        }
+        fprintf(fileOutput, "\n");
+    }
+
+    printf("Arquivo da matriz criado com sucesso!\n");
+    fclose(file);
+    fclose(fileOutput);
+    return 1;
+}
+```
+
+## 18)
+
+```c
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+
+/*Faça um programa que leia um arquivo contendo o nome e o preço de
+diversos produtos (separados por linha), e calcule o total da compra*/
+
+int main(){
+    FILE *file, *fileOutput;
+    char fileName[100], productName[100];
+    float price, totalPrice = 0.00;
+
+    printf("Digite o nome do arquivo com as informacoes da compra: ");
+    fgets(fileName, 100, stdin);
+    setbuf(stdin, NULL);
+    fileName[strlen(fileName)-1] = '\0';
+    strcat(fileName,".txt");
+
+    if((file = fopen(fileName,"r")) == NULL){ 
+        printf("Arquivo nao encontrado\n"); 
+        exit(1);
+    }
+
+    if((fileOutput = fopen("totalCompra.txt","a")) == NULL){ 
+        printf("Arquivo nao pode ser criado\n"); 
+        exit(1);
+    }
+    
+    while(!feof(file)){
+        fscanf(file, "%[^:]: %f\n", productName, &price);
+        totalPrice += price;
+    }
+
+    fprintf(fileOutput, "Preco total da compra: R$%.2f\n", totalPrice);
+    printf("Valor total (R$%.2f) adicionado ao arquivo totalCompra.txt com sucesso!\n", totalPrice);
+
+    fclose(file);
+    fclose(fileOutput);
+    return 1;
+}
+```
+
+## 19)
+
+```c
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+
+/*Faça um programa que receba do usuário um arquivo que contenha o
+nome e a nota de diversos alunos (da seguinte forma: NOME: JOÃO
+NOTA: 8), um aluno por linha. Mostre na tela o nome e a nota do aluno
+que possui a maior nota*/
+
+int main(){
+    FILE *file;
+    char fileName[100];
+    char tempName[100], highestName[100];
+    float tempNote, highestNote;
+
+    printf("Digite o nome do arquivo com as notas dos alunos: ");
+    fgets(fileName, 100, stdin);
+    setbuf(stdin, NULL);
+    fileName[strlen(fileName)-1] = '\0';
+    strcat(fileName,".txt");
+
+    if((file = fopen(fileName,"r")) == NULL){ 
+        printf("Arquivo nao encontrado\n"); 
+        exit(1);
+    }
+    
+    fscanf(file, "NOME: %[^:]: %f\n", highestName, &highestNote);
+    while(!feof(file)){
+        fscanf(file, "NOME: %[^:]: %f\n", tempName, &tempNote);
+        if(tempNote > highestNote){
+            tempName[strlen(tempName) - 5] = '\0';
+            strcpy(highestName, tempName);
+            highestNote = tempNote;
+        }
+    }
+
+    printf("%s obteve a nota mais alta, com %.2f pontos\n", highestName, highestNote);
+    fclose(file);
+    return 1;
+}
+```
+
+## 20)
+
+```c
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+
+/*Crie um programa que receba como entrada o número de alunos de uma
+disciplina. Aloque dinamicamente dois vetores para armazenar as
+informações a respeito desses alunos. O primeiro vetor contém o nome
+dos alunos e o segundo contém suas notas finais. Crie um arquivo que
+armazene, a cada linha, o nome do aluno e sua nota final. Use nomes
+com no máximo 40 caracteres. Se o nome não contém 40 caracteres,
+complete com espaço em branco.*/
+
+int main(){
+    FILE *fileOutput;
+    int n, len, i, j;
+    char **nome;
+    float *nota;
+
+    if((fileOutput = fopen("notas.txt","a")) == NULL){ 
+        printf("Arquivo nao pode ser criado\n"); 
+        exit(1);
+    }
+
+    printf("Insira a quantidade de alunos a armazenar: ");
+    scanf("%d",&n);
+    
+    //aloca vetor de nomes
+    if((nome = (char**)malloc(n*sizeof(char*))) == NULL){
+        printf("Erro de alocacao de memoria\n");
+        exit(1);
+    }for(i=0; i<n; i++){
+        if((nome[i] = (char*)malloc(40*sizeof(char))) == NULL){
+            printf("Erro de alocacao de memoria\n");
+            exit(1);
+        }
+    }
+    //aloca vetor de notas
+    if((nota = (float*)malloc(n*sizeof(float))) == NULL){
+        printf("Erro de alocacao de memoria\n");
+        exit(1);
+    }
+
+    //lendo alunos
+    for(i = 0; i < n; i++){
+        printf("Insira o nome do aluno %d: ", i+1);
+        setbuf(stdin, NULL);
+        fgets(nome[i], 40, stdin);
+        nome[i][strlen(nome[i])-1] = '\0';
+
+        printf("Insira a nota do aluno %d: ", i+1);
+        scanf("%f",&nota[i]);
+    }
+
+    //inserindo nomes e notas no arquivo
+    for(i = 0; i < n; i++){
+        fprintf(fileOutput, "NOME: ");
+        len = strlen(nome[i]);
+        for(j = 0; j < len; j++){
+            fputc(nome[i][j], fileOutput);
+        }for(; j < 39; j++){
+            fputc(' ', fileOutput);
+        }
+        fprintf(fileOutput, "NOTA: %.2f\n", nota[i]);
+    }
+
+    printf("Nomes e notas adicionadas ao arquivo notas.txt!\n");
+    fclose(fileOutput);
+    return 1;
+}
+```
